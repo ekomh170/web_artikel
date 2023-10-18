@@ -1,0 +1,4 @@
+{
+    "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
+    "intelephense.environment.phpVersion": "7.2.0"
+}
