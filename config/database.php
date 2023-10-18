@@ -15,5 +15,5 @@ if ($conn->connect_error) {
 // echo "Koneksi Berhasil";
 
 // Tutup koneksi
-$conn->close();
+// $conn->close();
 ?>

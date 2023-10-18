@@ -1,6 +1,13 @@
 <?php
 
-include "config/database.php"
+include"../../config/url.php";
+include "../../config/database.php";
+
+$sql = "SELECT * FROM artikel";
+$books = $conn->query($sql);
+
+// var_dump($books);
+// die;
 
 ?>
 
@@ -15,20 +22,20 @@ include "config/database.php"
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>moon firm</title>
+    <title>Web Artikel</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- bootstrap css -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap.min.css">
     <!-- style css -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css">
     <!-- Responsive-->
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/responsive.css">
     <!-- fevicon -->
-    <link rel="icon" href="assets/images/fevicon.png" type="image/gif" />
+    <link rel="icon" href="<?= base_url() ?>assets/images/fevicon.png" type="image/gif" />
     <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery.mCustomScrollbar.min.css">
     <!-- Tweaks for older IEs-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
@@ -42,7 +49,7 @@ include "config/database.php"
 <body class="main-layout ">
     <!-- loader  -->
     <div class="loader_bg">
-        <div class="loader"><img src="assets/images/loading.gif" alt="#" /></div>
+        <div class="loader"><img src="<?= base_url() ?>assets/images/loading.gif" alt="#" /></div>
     </div>
     <!-- end loader -->
     <!-- header -->
@@ -56,7 +63,8 @@ include "config/database.php"
                         <div class="full">
                             <div class="center-desk">
                                 <div class="logo">
-                                    <a href="index.html"><img src="assets/images/logobook.png" alt="#"></a>
+                                    <a href="index.html"><img src="<?= base_url() ?>assets/images/logobook.png"
+                                            alt="#"></a>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +94,7 @@ include "config/database.php"
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
                                 <form class="search">
                                     <input class="form-control" type="text" placeholder="Search">
-                                    <button><img src="assets/images/search_icon.png"></button>
+                                    <button><img src="<?= base_url() ?>assets/images/search_icon.png"></button>
                                 </form>
                             </div>
                         </div>
@@ -102,9 +110,10 @@ include "config/database.php"
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="first-slide" src="assets/images/header.jpg" alt="First slide">
+                    <img class="first-slide" src="<?= base_url() ?>assets/images/header.jpg" alt="First slide">
                     <div class="container">
                         <div class="carousel-caption relative">
+
                             <h1>BookZone</h1>
                             <span>NEWS WEBSITE</span>
 
@@ -125,32 +134,56 @@ include "config/database.php"
         <div class="container">
             <div class="row">
 
-                <div class="col-xl-3 col-lg-3 col-md-3 co-sm-3">
-                    <div class="h3">Berita Terkini</div>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                            The current link item
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">A second link item</a>
-                        <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                        <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
+                <div class="card col-xl-3 col-lg-3 col-md-3 co-sm-3">
+                    <h1 class="card-header">Berita Terkini : </h1>
+
+                    <div class="card-body">
+                        <div class="">TERPOPULER </div>
+                        <?php if ($books->num_rows > 0) { ?>
+                        <?php $iteration = 0;  ?>
+                        <?php   foreach ($books as $row) { ?>
+                        <div class="flex-none w-[280px]">
+                            <article class="pl-9 mb-4">
+                                <a aria-label="link description" href="#">
+                                    <button class="btn btn-danger text-cnn_grey text-lg absolute left-0">
+                                        0<?= $row["id_artikel"] ?> </button>
+                                    <h2 class="text-base text-cnn_black_light group-hover:text-cnn_red">
+                                        <?= $row["judul"] ?></h2>
+                                </a>
+                            </article>
+                        </div>
+                        <?php
+                            $iteration++;
+
+                            if ($iteration >= 3) {
+                                break; 
+                            }
+
+                            ?>
+                        <?php } ?>
+                        <?php } ?>
                     </div>
+
+
+                    </ul>
                 </div>
 
-                <div class="col-xl-8 col-lg-8 col-md-8 co-sm-8">
+
+                <div class="col-xl-7 col-lg-7 col-md-7 co-sm-7">
+                    <?php if ($books->num_rows > 0) { ?>
+                    <?php  while ($row = $books->fetch_assoc())  { ?>
                     <div class="about_box">
-                    <div class="about_img">
-                        <figure><img src="assets/images/about.png" alt="img" /></figure>
-                    </div>
-                        <h2>About moon<br><strong class="black"> Farm and company</strong></h2>
-                        <p>dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut aliquip ex dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex</p>
+                        <div class="about_img" style="  margin-bottom: 30px;">
+                            <figure><img src="<?= base_url() ?>assets/img_ext/<?= $row["gambar"] ?>" alt="img" style="width: auto;
+        height: auto;" /></figure>
+                        </div>
+
+                        <h2><?= $row["judul"] ?><br></h2>
+                        <p><?= $row["deskripsi"] ?></p>
                         <a href="#">Read More</a>
                     </div>
+                    <?php } ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -167,7 +200,7 @@ include "config/database.php"
                 <div class="row">
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                         <div class="address">
-                            <a href="index.html"> <img src="assets/images/logo.png" alt="logo" /></a>
+                            <a href="index.html"> <img src="<?= base_url() ?>assets/images/logo.png" alt="logo" /></a>
                             <p>dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                                 et sdolor sit amet, consectetur adipiscing elit, </p>
                         </div>
@@ -223,16 +256,16 @@ include "config/database.php"
 
     <!-- end footer -->
     <!-- Javascript files-->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery-3.0.0.min.js"></script>
-    <script src="assets/js/plugin.js"></script>
+    <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/popper.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/jquery-3.0.0.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/plugin.js"></script>
     <!-- sidebar -->
-    <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="<?= base_url() ?>assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/custom.js"></script>
     <!-- javascript -->
-    <script src="assets/js/owl.carousel.js"></script>
+    <script src="<?= base_url() ?>assets/js/owl.carousel.js"></script>
     <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
     <script>
         $(document).ready(function () {
