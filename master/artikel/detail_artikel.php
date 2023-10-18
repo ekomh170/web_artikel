@@ -6,6 +6,33 @@ include "../../config/database.php";
 $sql = "SELECT * FROM artikel";
 $books = $conn->query($sql);
 
+// Periksa apakah parameter 'id_artikel' telah diberikan di URL
+if (isset($_GET['id'])) {
+    $id_artikel = $_GET['id'];
+
+    // Eksekusi kueri SQL untuk mendapatkan artikel berdasarkan ID
+    $sql = "SELECT * FROM artikel WHERE id_artikel = $id_artikel";
+    $result = $conn->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $judul = $row["judul"];
+        $sumber = $row["sumber"];
+        $penulis = $row["penulis"];
+        $tanggal = $row["tanggal"];
+        $isi = $row["isi"];
+        $gambar = $row["gambar"];
+    } else {
+        echo "Artikel tidak ditemukan.";
+        exit;
+    }
+} else {
+    echo "Parameter 'artikel' tidak ditemukan.";
+    exit;
+}
+
+
+
 // var_dump($books);
 // die;
 
@@ -170,25 +197,19 @@ $books = $conn->query($sql);
 
 
                 <div class="col-xl-7 col-lg-7 col-md-7 co-sm-7 card m-3">
-                    <?php if ($books->num_rows > 0) { ?>
-                    <?php  while ($row = $books->fetch_assoc())  { ?>
                     <div class="about_box">
-                        <h2 style="text-align: center;" class="m-3">By : <?= $row["sumber"] ?><br></h2>
+                        <h2 style="text-align: center;" class="m-3">By : <?= $sumber ?><br></h2>
                         <div class="about_img" style="  margin-bottom: 30px;">
-                            <figure><img src="<?= base_url() ?>assets/img_ext/<?= $row["gambar"] ?>" alt="img" style="width: auto;
+                            <figure><img src="<?= base_url() ?>assets/img_ext/<?= $gambar ?>" alt="img" style="width: auto;
         height: auto;" /></figure>
                         </div>
-                        <button class="btn btn-success ">Tanggal Terbit : <?= $row["tanggal"] ?><br></button>
-                        <button class="btn btn-success float-right mb-3">Penulis : <?= $row["penulis"] ?><br></button>
+                        <button class="btn btn-success ">Tanggal Terbit : <?= $tanggal ?><br></button>
+                        <button class="btn btn-success float-right mb-3">Penulis : <?= $penulis ?><br></button>
                         <div class="mt-3">
-                            <h2><?= $row["judul"] ?><br></h2>
-                            <p><?= $row["deskripsi"] ?></p>
-                      
-                        <a href="<?= base_url() ?>master/artikel/detail_artikel.php?id=<?= $row['id_artikel']; ?>" class="float-right m-3">Detail Buku!!</a>
+                            <h2><?= $judul ?><br></h2>
+                            <p><?= $isi ?></p>
                         </div>
                     </div>
-                    <?php } ?>
-                    <?php } ?>
                 </div>
             </div>
         </div>
