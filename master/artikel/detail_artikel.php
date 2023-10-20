@@ -106,7 +106,7 @@ if (isset($_GET['id'])) {
                                     <div class="limit-box">
                                         <nav class="main-menu">
                                             <ul class="menu-area-main">
-                                                <li class="active"> <a href="index.html">Home</a> </li>
+                                            <li class="active"><a href="<?= base_url() ?>master/artikel/artikel.php">Home</a> </li>
                                                 <li> <a href="#about">About</a> </li>
                                                 <li><a href="#product">Photos</a></li>
                                                 <li><a href="#testimonial">Blog</a></li>
